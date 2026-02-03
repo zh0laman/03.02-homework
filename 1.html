@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Функции и события JS</title>
+  <style>
+    .blue {
+      color: blue;
+    }
+    .red {
+      color: red;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>1–5 Простые</h2>
+
+  <!-- 4. Кнопка -->
+  <button id="btn1">Нажми меня</button>
+
+  <!-- 5. Hover -->
+  <div id="hoverText">Наведи на меня</div>
+
+  <hr>
+
+  <h2>6–10 Средние</h2>
+
+  <!-- 6. Счётчик -->
+  <p id="count">0</p>
+  <button id="countBtn">+</button>
+
+  <!-- 7. Input -->
+  <input id="textInput" placeholder="Введите текст">
+  <p id="outputText"></p>
+
+  <!-- 8. Параметры -->
+  <button id="alertBtn">Показать сообщение</button>
+
+  <!-- 9. Смена класса -->
+  <div id="colorBox" class="blue">Нажми на меня</div>
+
+  <!-- 10. Сумма -->
+  <input id="num1" type="number">
+  <input id="num2" type="number">
+  <button id="sumBtn">Суммировать</button>
+  <p id="sumResult"></p>
+
+  <hr>
+
+  <h2>11–15 Сложные</h2>
+
+  <!-- 11. Создание элементов -->
+  <button onclick="createBox('red')">Красный</button>
+  <button onclick="createBox('green')">Зелёный</button>
+  <button onclick="createBox('blue')">Синий</button>
+  <div id="boxes"></div>
+
+  <!-- 12. Делегирование -->
+  <ul id="list">
+    <li>Элемент 1</li>
+    <li>Элемент 2</li>
+    <li>Элемент 3</li>
+    <li>Элемент 4</li>
+    <li>Элемент 5</li>
+  </ul>
+
+  <!-- 13. Таймер -->
+  <p id="timer">0</p>
+  <button id="start">Старт</button>
+  <button id="stop">Стоп</button>
+
+  <!-- 14. Email -->
+  <input id="email" placeholder="Введите email">
+  <button id="send">Отправить</button>
+
+  <!-- 15. Угадай число -->
+  <input id="guess" type="number" min="1" max="10">
+  <button id="check">Проверить</button>
+  <p id="hint"></p>
+
+<script>
+/* 1 */
+function greet(name) {
+  return "Привет, " + name + "!";
+}
+console.log(greet("Султан"));
+
+/* 2 */
+function sum(a, b) {
+  return a + b;
+}
+console.log(sum(2, 3));
+console.log(sum(10, 5));
+
+/* 3 */
+function showMessage() {
+  alert("Функция сработала!");
+}
+showMessage();
+
+/* 4 */
+document.getElementById("btn1").onclick = function () {
+  alert("Кнопка нажата!");
+};
+
+/* 5 */
+const hoverText = document.getElementById("hoverText");
+hoverText.onmouseover = () => hoverText.style.color = "red";
+hoverText.onmouseout = () => hoverText.style.color = "black";
+
+/* 6 */
+let count = 0;
+document.getElementById("countBtn").onclick = () => {
+  count++;
+  document.getElementById("count").textContent = count;
+};
+
+/* 7 */
+document.getElementById("textInput").oninput = (e) => {
+  document.getElementById("outputText").textContent = e.target.value;
+};
+
+/* 8 */
+function showAlert(msg) {
+  alert(msg);
+}
+document.getElementById("alertBtn").onclick = () => {
+  showAlert("Привет! Это сообщение.");
+};
+
+/* 9. */
+document.getElementById("colorBox").onclick = function () {
+  this.className = this.className === "blue" ? "red" : "blue";
+};
+
+/* 10 */
+document.getElementById("sumBtn").onclick = () => {
+  const a = Number(num1.value);
+  const b = Number(num2.value);
+  sumResult.textContent = a + b;
+};
+
+/* 11*/
+function createBox(color) {
+  const div = document.createElement("div");
+  div.className = "box";
+  div.style.background = color;
+  document.getElementById("boxes").appendChild(div);
+}
+
+/* 12 */
+document.getElementById("list").onclick = (e) => {
+  if (e.target.tagName === "LI") {
+    alert(e.target.textContent);
+  }
+};
+
+/* 13 */
+let timer = 0;
+let interval;
+
+start.onclick = () => {
+  interval = setInterval(() => {
+    timer++;
+    document.getElementById("timer").textContent = timer;
+  }, 1000);
+};
+
+stop.onclick = () => clearInterval(interval);
+
+/* 14 */
+send.onclick = () => {
+  const email = document.getElementById("email").value;
+  email.includes("@")
+    ? alert("Email принят")
+    : alert("Ошибка: нет @");
+};
+
+/* 15*/
+const secret = Math.floor(Math.random() * 10) + 1;
+
+check.onclick = () => {
+  const user = Number(guess.value);
+  if (user < secret) hint.textContent = "Больше";
+  else if (user > secret) hint.textContent = "Меньше";
+  else hint.textContent = "Угадал!";
+};
+</script>
+
+</body>
+</html>
